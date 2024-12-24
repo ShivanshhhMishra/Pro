@@ -4,13 +4,13 @@ const temperatureField = document.querySelector(".temp");
 const locationField = document.querySelector(".time_location p");
 const dateandTimeField = document.querySelector(".time_location span");
 const conditionField = document.querySelector(".condition p");
-const searchField = document.querySelector(".search_area");
+const searchField = document.querySelector(".search_area input");
 const form = document.querySelector("form");
 
-let target = "Mumbai";
+let target = "moradabad";
 
 const fetchResults = async (targetLocation) => {
-  let url = `http://api.weatherapi.com/v1/current.json?key=fca229380f354648818185507242312&q=Mumbai&aqi=no`;
+  let url = `http://api.weatherapi.com/v1/current.json?key=fca229380f354648818185507242312&q=${targetLocation}&aqi=no`;
 
   const res = await fetch(url);
 
@@ -28,8 +28,8 @@ const fetchResults = async (targetLocation) => {
   updateDetails(temp, locationName, time, condition);
 };
 
-function updateDetails(temp, localtime, time, condition) {
-  temperatureField.innerText = temp;
+function updateDetails(temp, locationName, time, condition) {
+  temperatureField.innerText = `${temp}°C`;
   locationField.innerText = locationName;
   dateandTimeField.innerText = time;
   conditionField.innerText = condition;
@@ -38,9 +38,14 @@ function updateDetails(temp, localtime, time, condition) {
 function searchForLocation(e) {
   e.preventDefault();
 
-  target = searchField.value;
-
-  fetchResults(target);
+  target = searchField.value.trim();
+  if (target) {
+    fetchResults(target);
+  } else {
+    alert("Please enter a city name.");
+  }
 }
 
 fetchResults(target);
+
+form.addEventListener("submit", searchForLocation);
