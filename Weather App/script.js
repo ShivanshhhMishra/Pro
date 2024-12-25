@@ -4,10 +4,10 @@ const temperatureField = document.querySelector(".temp");
 const locationField = document.querySelector(".time_location p");
 const dateandTimeField = document.querySelector(".time_location span");
 const conditionField = document.querySelector(".condition p");
-const searchField = document.querySelector(".search_area input");
+const searchField = document.querySelector(".search_area");
 const form = document.querySelector("form");
 
-let target = "moradabad";
+let target = searchField.value.trim();
 
 const fetchResults = async (targetLocation) => {
   let url = `http://api.weatherapi.com/v1/current.json?key=fca229380f354648818185507242312&q=${targetLocation}&aqi=no`;
